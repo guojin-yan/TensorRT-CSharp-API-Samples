@@ -68,7 +68,7 @@ namespace Yolov8
                 {
                     float[] data = new float[CategNums];
                     Array.Copy(outputData, i * CategNums, data, 0, CategNums);
-                    List<int> sortResult = Utility.argsort(data);
+                    List<int> sortResult = Utility.Argsort(data);
                     ClsResult result = new ClsResult();
                     for (int j = 0; j < ResultNum; ++j)
                     {

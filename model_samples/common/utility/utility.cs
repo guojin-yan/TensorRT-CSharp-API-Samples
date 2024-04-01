@@ -38,7 +38,7 @@ namespace TrtCommon
         /// </summary>
         /// <param name="array">The original array.</param>
         /// <returns>The position after arrangement.</returns>
-        public static List<int> argsort(float[] array) 
+        public static List<int> Argsort(float[] array) 
         {
             return Argsort(new List<float>(array));
         }
