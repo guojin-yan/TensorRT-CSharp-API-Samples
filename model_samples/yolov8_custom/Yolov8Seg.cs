@@ -44,10 +44,10 @@ namespace Yolov8
             {
                 DateTime start = DateTime.Now;
                 int endImgNo = Math.Min(images.Count, begImgNo + BatchNum);
-                int batch_num = endImgNo - begImgNo;
+                int batchNum = endImgNo - begImgNo;
                 List<Mat> normImgBatch = new List<Mat>();
-                Factors = new float[batch_num];
-                ImageSizes = new List<Size>(batch_num);
+                Factors = new float[batchNum];
+                ImageSizes = new List<Size>(batchNum);
                 for (int ino = begImgNo; ino < endImgNo; ino++)
                 {
                     Mat mat = new Mat();
@@ -73,7 +73,7 @@ namespace Yolov8
                 Dims d = predictor.GetBindingDimensions("output0");
                 float[] detect = predictor.GetInferenceResult("output0");
                 float[] proto = predictor.GetInferenceResult("output1");
-                List<SegResult> results = ProcessResult(detect, proto, batch_num);
+                List<SegResult> results = ProcessResult(detect, proto, batchNum);
                 end = DateTime.Now;
                 Slog.INFO("Inference result processing time: " + (end - start).TotalMilliseconds + " ms.");
                 returnResults.AddRange(results);
