@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "common", "model_samples\com
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yolov8_custom", "model_samples\yolov8_custom\yolov8_custom.csproj", "{0D4360C2-09CB-4729-8FB4-811782E9F1D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yolov8_custom_dynamic", "model_samples\yolov8_custom_dynamic\yolov8_custom_dynamic.csproj", "{5F1CA81B-BAE2-428A-9DD3-81D2150CA911}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{0D4360C2-09CB-4729-8FB4-811782E9F1D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D4360C2-09CB-4729-8FB4-811782E9F1D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D4360C2-09CB-4729-8FB4-811782E9F1D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F1CA81B-BAE2-428A-9DD3-81D2150CA911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F1CA81B-BAE2-428A-9DD3-81D2150CA911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F1CA81B-BAE2-428A-9DD3-81D2150CA911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F1CA81B-BAE2-428A-9DD3-81D2150CA911}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DCD44A60-88FF-4C60-A358-33F842CEAEC2} = {DEB56E89-F722-4384-BBAF-202E15AA3679}
 		{0D4360C2-09CB-4729-8FB4-811782E9F1D1} = {DEB56E89-F722-4384-BBAF-202E15AA3679}
+		{5F1CA81B-BAE2-428A-9DD3-81D2150CA911} = {DEB56E89-F722-4384-BBAF-202E15AA3679}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D02FC0B5-7CE1-48E4-85DA-F9CAD94CD593}
