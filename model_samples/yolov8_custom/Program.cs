@@ -10,17 +10,17 @@ namespace Yolov8
             Console.WriteLine("Hello, World!");
 
 
-            //Yolov8Det yolov8Det = new Yolov8Det("E:\\Model\\yolov8\\yolov8s_2.engine");
-            //Mat image1 = Cv2.ImRead("E:\\ModelData\\image\\demo_1.jpg");
-            //Mat image2 = Cv2.ImRead("E:\\ModelData\\image\\demo_2.jpg");
+            Yolov8Det yolov8Det = new Yolov8Det("E:\\Model\\yolo\\yolov8s.engine");
+            Mat image1 = Cv2.ImRead("E:\\ModelData\\image\\demo_2.jpg");
+            Mat image2 = Cv2.ImRead("E:\\ModelData\\image\\demo_2.jpg");
 
-            //List<DetResult> detResults = yolov8Det.Predict(new List<Mat> { image1, image2 });
-            //Mat re_image1 = Visualize.DrawDetResult(detResults[0], image1);
+            List<DetResult> detResults = yolov8Det.Predict(new List<Mat> { image1 });
+            Mat re_image1 = Visualize.DrawDetResult(detResults[0], image1);
             //Mat re_image2 = Visualize.DrawDetResult(detResults[1], image2);
 
-            //Cv2.ImShow("image1", re_image1);
+            Cv2.ImShow("image1", re_image1);
             //Cv2.ImShow("image2", re_image2);
-            //Cv2.WaitKey(0);
+            Cv2.WaitKey(0);
 
 
 
@@ -66,17 +66,17 @@ namespace Yolov8
 
 
 
-            Yolov8Obb yolov8Obb = new Yolov8Obb("E:\\Model\\yolov8\\yolov8s-obb_2.engine");
-            Mat image1 = Cv2.ImRead("E:\\ModelData\\image\\plane.png");
-            Mat image2 = Cv2.ImRead("E:\\ModelData\\image\\tennis_court.png");
+            //Yolov8Obb yolov8Obb = new Yolov8Obb("E:\\Model\\yolov8\\yolov8s-obb_2.engine");
+            //Mat image1 = Cv2.ImRead("E:\\ModelData\\image\\plane.png");
+            //Mat image2 = Cv2.ImRead("E:\\ModelData\\image\\tennis_court.png");
 
-            List<ObbResult> obbResults = yolov8Obb.Predict(new List<Mat> { image1, image2 });
-            Mat re_image1 = Visualize.DrawObbResult(obbResults[0], image1);
-            Mat re_image2 = Visualize.DrawObbResult(obbResults[1], image2);
+            //List<ObbResult> obbResults = yolov8Obb.Predict(new List<Mat> { image1, image2 });
+            //Mat re_image1 = Visualize.DrawObbResult(obbResults[0], image1);
+            //Mat re_image2 = Visualize.DrawObbResult(obbResults[1], image2);
 
-            Cv2.ImShow("image1", re_image1);
-            Cv2.ImShow("image2", re_image2);
-            Cv2.WaitKey(0);
+            //Cv2.ImShow("image1", re_image1);
+            //Cv2.ImShow("image2", re_image2);
+            //Cv2.WaitKey(0);
 
         }
 
