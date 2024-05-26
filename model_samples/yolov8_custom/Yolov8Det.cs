@@ -14,7 +14,6 @@ namespace Yolov8
 {
     internal class Yolov8Det
     {
-
         public int CategNums = 80;
         public float DetThresh = 0.5f;
         public float DetNmsThresh = 0.5f;
@@ -24,7 +23,8 @@ namespace Yolov8
         public int BatchNum;
 
         private Nvinfer predictor;
-        public Yolov8Det(string enginePath) 
+
+        public Yolov8Det(string enginePath)
         {
             if (Path.GetExtension(enginePath) == ".onnx")
             {
@@ -36,6 +36,7 @@ namespace Yolov8
 
             BatchNum = InputDims.d[0];
         }
+
         public List<DetResult> Predict(List<Mat> images)
         {
             List<DetResult> returnResults = new List<DetResult>();
@@ -74,7 +75,6 @@ namespace Yolov8
                 returnResults.AddRange(results);
             }
             return returnResults;
-
         }
 
         /// <summary>
@@ -91,47 +91,43 @@ namespace Yolov8
                     Marshal.UnsafeAddrOfPinnedArrayElement(result, (4 + CategNums) * OutputLength * b), 4 * OutputLength);
                 resultData = resultData.T();
 
+                float[] subArray = new float[705600];
+
+                // 使用Array.Copy方法复制子数组
+                Array.Copy(result, 705600 * b, subArray, 0, 705600);
+
                 // Storage results list
                 List<Rect> positionBoxes = new List<Rect>();
                 List<int> classIds = new List<int>();
                 List<float> confidences = new List<float>();
                 // Preprocessing output results
-                for (int i = 0; i < resultData.Rows; i++)
+                for (int i = 0; i < OutputLength; i++)
                 {
-                    Mat classesScores = new Mat(resultData, new Rect(4, i, CategNums, 1));
-                    Point maxClassIdPoint, minClassIdPoint;
-                    double maxScore, minScore;
-                    // Obtain the maximum value and its position in a set of data
-                    Cv2.MinMaxLoc(classesScores, out minScore, out maxScore,
-                        out minClassIdPoint, out maxClassIdPoint);
-                    // Confidence level between 0 ~ 1
-                    // Obtain identification box information
-                    if (maxScore > 0.25)
+                    for (int j = 4; j < 4 + CategNums; j++)
                     {
-                        float cx = resultData.At<float>(i, 0);
-                        float cy = resultData.At<float>(i, 1);
-                        float ow = resultData.At<float>(i, 2);
-                        float oh = resultData.At<float>(i, 3);
-                        int x = (int)((cx - 0.5 * ow) * this.Factors[b]);
-                        int y = (int)((cy - 0.5 * oh) * this.Factors[b]);
-                        int width = (int)(ow * this.Factors[b]);
-                        int height = (int)(oh * this.Factors[b]);
-                        Rect box = new Rect();
-                        box.X = x;
-                        box.Y = y;
-                        box.Width = width;
-                        box.Height = height;
-
-                        positionBoxes.Add(box);
-                        classIds.Add(maxClassIdPoint.X);
-                        confidences.Add((float)maxScore);
+                        float source = subArray[OutputLength * j + i];
+                        int label = j - 4;
+                        if (source > DetThresh)
+                        {
+                            float maxSource = source;
+                            float cx = subArray[OutputLength * 0 + i];
+                            float cy = subArray[OutputLength * 1 + i];
+                            float ow = subArray[OutputLength * 2 + i];
+                            float oh = subArray[OutputLength * 3 + i];
+                            int x = (int)((cx - 0.5 * ow) * Factors[b]);
+                            int y = (int)((cy - 0.5 * oh) * Factors[b]);
+                            int width = (int)(ow * Factors[b]);
+                            int height = (int)(oh * Factors[b]);
+                            Rect box = new Rect(x, y, width, height);
+                            positionBoxes.Add(box);
+                            classIds.Add(label);
+                            confidences.Add(maxSource);
+                        }
                     }
                 }
-                // NMS non maximum suppression
+                DetResult re = new DetResult();
                 int[] indexes = new int[positionBoxes.Count];
                 CvDnn.NMSBoxes(positionBoxes, confidences, this.DetThresh, this.DetNmsThresh, out indexes);
-                DetResult re = new DetResult();
-                // 
                 for (int i = 0; i < indexes.Length; i++)
                 {
                     int index = indexes[i];
